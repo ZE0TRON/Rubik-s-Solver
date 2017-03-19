@@ -1,7 +1,6 @@
 from RubikCubeClass import Cube
 import thread
 import threading
-tc=0
 class myThread (threading.Thread):
     def __init__(self, threadID,name,cube,step,lastmove,solution,solved,counter,counters,threads,cubelist):
         threading.Thread.__init__(self)
@@ -24,8 +23,7 @@ def killthreads():
     global tc
     for i in xrange(1,tc+1):
         "th"+str(i).exit()
-def solve(cube,step,lastmove,solution,solved,tn,thname,counter,threads,cubelist):
-    global tc
+def solve(cube,step,lastmove,solution,solved,counter,cubelist,tc):
     print len(cubelist)
     print tc
     print counter
@@ -56,97 +54,85 @@ def solve(cube,step,lastmove,solution,solved,tn,thname,counter,threads,cubelist)
             if(lastmove!="uac" and counter[0]!=3):
                 tc+=1
                 cubelist.append(cube.uc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"uc",solution+"uc",solved,5,[counter[0]+1,0,0,0,counter[4],0],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"uc",solution+"uc",solved,[counter[0]+1,0,0,0,counter[4],0],cubelist,tc)
                 #solve(cube.uc(),step+1,"uc",solution+"uc",solved,5,thname,[counter[0]+1,0,0,0,counter[4],0])
                 cube=cube.uac()
         if(tn==2 or tn==5 ):
             if(lastmove!="uc" and counter[0]!=3):
                 tc+=1
                 cubelist.append(cube.uac())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"uac",solution+"uac",solved,5,[counter[0]+1,0,0,0,counter[4],0],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"uac",solution+"uac",solved,[counter[0]+1,0,0,0,counter[4],0],cubelist,tc)
                 #solve(cube.uac(),step+1,"uac",solution+"uac",solved,5,thname,[counter[0]+1,0,0,0,counter[4],0])
                 cube=cube.uc()
         if(tn==3 or tn==5):
             if(lastmove!="dac" and counter[4]!=3):
                 tc+=1
                 cubelist.append(cube.dc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"dc",solution+"dc",solved,5,[counter[0],0,0,0,counter[4]+1,0],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"dc",solution+"dc",solved,[counter[0],0,0,0,counter[4]+1,0],cubelist,tc)
                 #solve(cube.dc(),step+1,"dc",solution+"dc",solved,5,thname,[counter[0],0,0,0,counter[4]+1,0])
                 cube=cube.dac()
         if(tn==4 or tn==5 ):
             if(lastmove!="dc" and counter[4]!=3):
                 tc+=1
                 cubelist.append(cube.dac())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"dac",solution+"dac",solved,5,[counter[0],0,0,0,counter[4]+1,0],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"dac",solution+"dac",solved,[counter[0],0,0,0,counter[4]+1,0],cubelist,tc)
                 #solve(cube.dac(),step+1,"dac",solution+"dac",solved,5,thname,[counter[0],0,0,0,counter[4]+1,0])
                 cube=cube.dc()
         if(tn==5 or tn==5 ):
             if(lastmove!="fac" and counter[1]!=3):
                 tc+=1
                 cubelist.append(cube.fc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"fc",solution+"fc",solved,5,[0,counter[1]+1,0,0,0,counter[5]],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"fc",solution+"fc",solved,[0,counter[1]+1,0,0,0,counter[5]],cubelist,tc)
                 #solve(cube.fc(),step+1,"fc",solution+"fc",solved,5,thname,[0,counter[1]+1,0,0,0,counter[5]])
                 cube=cube.fac()
         if(tn==6 or tn==5 ):
             if(lastmove!="fc" and counter[1]!=3):
                 tc+=1
                 cubelist.append(cube.fac())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"fac",solution+"fac",solved,5,[0,counter[1]+1,0,0,0,counter[5]],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"fac",solution+"fac",solved,[0,counter[1]+1,0,0,0,counter[5]],cubelist,tc)
                 #solve(cube.fac(),step+1,"fac",solution+"fac",solved,5,thname,[0,counter[1]+1,0,0,0,counter[5]])
                 cube=cube.fc()
         if(tn==7 or tn==5 ):
             if(lastmove!="bac" and counter[5]!=3):
                 tc+=1
                 cubelist.append(cube.bc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"bc",solution+"bc",solved,5,[0,counter[1],0,0,0,counter[5]+1],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"bc",solution+"bc",solved,[0,counter[1],0,0,0,counter[5]+1],cubelist,tc)
                 #solve(cube.bc(),step+1,"bc",solution+"bc",solved,5,thname,[0,counter[1],0,0,0,counter[5]+1])
                 cube=cube.bac()
         if(tn==8 or tn==5 ):
             if(lastmove!="bc" and counter[5]!=3):
                 tc+=1
                 cubelist.append(cube.bac())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"bac",solution+"bac",solved,5,[0,counter[1],0,0,0,counter[5]+1],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"bac",solution+"bac",solved,[0,counter[1],0,0,0,counter[5]+1],cubelist,tc)
                 #solve(cube.bac(),step+1,"bac",solution+"bac",solved,5,thname,[0,counter[1],0,0,0,counter[5]+1])
                 cube=cube.bc()
         if(tn==9 or tn==5 ):
             if(lastmove!="lac" and counter[2]!=3):
                 tc+=1
                 cubelist.append(cube.lc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"lc",solution+"lc",solved,5,[0,0,counter[2]+1,counter[3],0,0],[0,counter[1],0,0,0,counter[5]+1],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"lc",solution+"lc",solved,[0,0,counter[2]+1,counter[3],0,0],cubelist,tc)
                 #solve(cube.lc(),step+1,"lc",solution+"lc",solved,5,thname,[0,0,counter[2]+1,counter[3],0,0])
                 cube=cube.lac()
         if(tn==10 or tn==5 ):
             if(lastmove!="lc" and counter[2]!=3):
                 tc+=1
                 cubelist.append(cube.lc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"lac",solution+"lac",solved,5,[0,0,counter[2]+1,counter[3],0,0],threads,cubelist))
-                threads[tc].start()
+                solve(cubelist[tc],step+1,"lac",solution+"lac",solved,[0,0,counter[2]+1,counter[3],0,0],cubelist,tc)
                 #solve(cube.lac(),step+1,"lac",solution+"lac",solved,5,thname,[0,0,counter[2]+1,counter[3],0,0])
                 cube=cube.lc()
         if(tn==11 or tn==5 ):
             if(lastmove!="rac" and counter[3]!=3):
                 tc+=1
                 cubelist.append(cube.rc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"rc",solution+"rc",solved,5,[0,0,counter[2],counter[3]+1,0,0],threads,cubelist))
-                threads[tc].start()
-                #solve(cube.rc(),step+1,"rc",solution+"rc",solved,5,thname,[0,0,counter[2],counter[3]+1,0,0])
+                solve(cubelist[tc],step+1,"rc",solution+"rc",solved,[0,0,counter[2],counter[3]+1,0,0],cubelist,tc)
+                                #solve(cube.rc(),step+1,"rc",solution+"rc",solved,5,thname,[0,0,counter[2],counter[3]+1,0,0])
                 cube=cube.rac()
         if(tn==12 or tn==5 ):
             if(lastmove!="rc" and counter[3]!=3):
                 tc+=1
                 cubelist.append(cube.rc())
-                threads.append(myThread(tc,"th"+str(tc),cubelist[tc],step+1,"rac",solution+"rac",solved,5,[0,0,counter[2],counter[3]+1,0,0],threads,cubelist))
-                threads[tc].start()
-                #solve(cube.rac(),step+1,"rac",solution+"rac",solved,5,thname,[0,0,counter[2],counter[3]+1,0,0])
+                solve(cubelist[tc],step+1,"rac",solution+"rac",solved,[0,0,counter[2],counter[3]+1,0,0],cubelist,tc)
+                                #solve(cube.rac(),step+1,"rac",solution+"rac",solved,5,thname,[0,0,counter[2],counter[3]+1,0,0])
                 cube=cube.rc()
 
 up=[]
